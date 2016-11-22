@@ -194,6 +194,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -246,6 +247,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -256,6 +258,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Restaurant.Common\Restaurant.Common.csproj">
+      <Project>{4d9a8037-0e73-483d-ab60-1320812bd612}</Project>
+      <Name>Restaurant.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Restaurant.Core\Restaurant.Core.csproj">
       <Project>{3616a6a7-ad4c-43b7-95b3-00508e235979}</Project>
       <Name>Restaurant.Core</Name>

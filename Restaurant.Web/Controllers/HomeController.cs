@@ -1,4 +1,5 @@
-﻿using Restaurant.Core;
+﻿using Restaurant.Common;
+using Restaurant.Core;
 using Restaurant.DAL;
 using Restaurant.Interface.Repository;
 using Restaurant.Web.Models;
@@ -10,11 +11,8 @@ using System.Web.Mvc;
 
 namespace Restaurant.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-
-        private IUnitOfWork unitOfWork = new UnitOfWork();
-        private IRepository<Booking> bookingRepository;
 
         public HomeController()
         {
@@ -23,7 +21,9 @@ namespace Restaurant.Web.Controllers
 
         public ActionResult Index()
         {
-            //bookingRepository.Save();
+            //var encText = DecoderUtil.Encrypt("HelloJohn");
+            //var decText = DecoderUtil.Decrypt(encText);
+
 
             return View(new RestaurantViewModel());
         }
