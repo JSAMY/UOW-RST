@@ -1,0 +1,27 @@
+﻿#header {
+	margin-top: 30px;
+	padding-bottom: 30px;
+	border-bottom: 4px solid #0051a1;
+}
+
+h1, p.lead {
+	text-align: center;
+}
+
+.banner {
+    background: url('images/food.jpg') no-repeat center;
+    height: 300px;    
+}
+
+.banner .strapline {
+	color: #fff;
+	text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+	font-size: 40px;
+	text-align: center;
+	display: block;
+	padding-top: 120px;
+}
+
+#footer {
+	margin-top: 30px;
+}

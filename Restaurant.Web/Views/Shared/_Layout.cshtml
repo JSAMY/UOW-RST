@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Test Restaurant</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <div class="headerContent">
+                <a href="/"><img src="~/Content/images/logo.png" alt="The Test Restaurant" width="340" height="28" class="logo" /></a>
+            </div>
+        </div>
+    </header>
+    <div class="banner">
+        <span class="strapline">Great food, low prices</span>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <footer id="footer">
+            <div class="container">
+                &copy; The Test Restaurant
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    
+    @RenderSection("scripts", required: false)
+</body>
+</html>
