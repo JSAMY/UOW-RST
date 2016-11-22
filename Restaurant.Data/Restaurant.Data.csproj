@@ -76,7 +76,6 @@
   <ItemGroup>
     <Compile Include="Map\BookingMap.cs" />
     <Compile Include="DatabaseContext\ApplicationDbContext.cs" />
-    <Compile Include="DatabaseContext\Booking.cs" />
     <Compile Include="Migrations\201611221532507_init-tables.cs" />
     <Compile Include="Migrations\201611221532507_init-tables.Designer.cs">
       <DependentUpon>201611221532507_init-tables.cs</DependentUpon>

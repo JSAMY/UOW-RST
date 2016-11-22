@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,8 +69,6 @@ namespace Restaurant.Common
         }
     }
 
-    
-
     public static class Helper
     {
         public static T GetConfigValue<T>(string keyName)
@@ -85,7 +85,6 @@ namespace Restaurant.Common
             }
         }
     }
-
 
     public static class TConverter
     {
@@ -120,4 +119,46 @@ namespace Restaurant.Common
         }
     }
 
+    public static class Email
+    {
+        public static void SendGmail()
+        {
+            var fromAddress = new MailAddress("from@gmail.com", "From Name");
+            var toAddress = new MailAddress("to@example.com", "To Name");
+            const string fromPassword = "fromPassword";
+            const string subject = "Subject";
+            const string body = "Body";
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(message);
+            }
+        }
+
+        public static void SendEmail(string body)
+        {
+            System.Net.Mail.MailMessage oMailMsg = new System.Net.Mail.MailMessage();
+            oMailMsg.To.Add(ConfigurationManager.AppSettings["ToEmailAddress"]);
+            oMailMsg.Subject = ConfigurationManager.AppSettings["Subject"];
+
+            oMailMsg.IsBodyHtml = true;
+            oMailMsg.Body = body;
+
+            System.Net.Mail.SmtpClient oSMTPClient = new System.Net.Mail.SmtpClient();
+            oSMTPClient.Send(oMailMsg);
+        }
+    }
 }
