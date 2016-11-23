@@ -8,7 +8,8 @@ namespace Restaurant.Web.Models
 {
     public class RestaurantViewModel
     {
-        [Required]
+        [Required()]
+        //[RegularExpression(@"/^[a-zA-Z\s]+$/", ErrorMessage = "Not a valid name")]
         [Display(Name = "Your name:")]
         public string Name { get; set; }
 
@@ -19,7 +20,8 @@ namespace Restaurant.Web.Models
 
         [Required]
         [Phone(ErrorMessage = "Not a valid Phone number")]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
+        //[RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
+        [RegularExpression(@"^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$", ErrorMessage = "Not a valid Phone number")]
         [Display(Name = "Your phone number:")]
         public string Number { get; set; }
 
