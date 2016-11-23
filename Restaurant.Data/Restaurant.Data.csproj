@@ -108,6 +108,10 @@
       <Project>{3616a6a7-ad4c-43b7-95b3-00508e235979}</Project>
       <Name>Restaurant.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Restaurant.Interface\Restaurant.Interface.csproj">
+      <Project>{36D82760-69F5-4D81-A002-A9882ABCFFD7}</Project>
+      <Name>Restaurant.Interface</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611221532507_init-tables.resx">

@@ -1,6 +1,7 @@
 ﻿using Restaurant.Common;
 using Restaurant.Core;
 using Restaurant.DAL;
+using Restaurant.Interface;
 using Restaurant.Interface.Repository;
 using Restaurant.Web.Models;
 using System;
@@ -13,37 +14,42 @@ namespace Restaurant.Web.Controllers
 {
     public class HomeController : BaseController
     {
+         
 
-        public HomeController()
+        public HomeController(IUnitOfWork _unitOfWork, IRepository<Booking> _bookingRepository) 
+            :base(_unitOfWork, _bookingRepository)  
         {
-            bookingRepository = unitOfWork.Repository<Booking>();
+            
         }
 
         public ActionResult Index()
         {
-            //var encText = DecoderUtil.Encrypt("HelloJohn");
-            //var decText = DecoderUtil.Decrypt(encText);
-
-
             return View(new RestaurantViewModel());
         }
 
         [HttpPost]
         public ActionResult Index(RestaurantViewModel model)
         {
-            Booking booking = new Booking
+            try
             {
-                CreatedAt = DateTime.Now,
-                Email = model.Email,
-                Name = model.Name,
-                PhoneNum = model.Number,
-                PreferredDateTime = model.PreferredDateTime,
-                TableNo = "1"
-            };
+                Booking booking = new Booking
+                {
+                    CreatedAt = DateTime.Now,
+                    Email = model.Email,
+                    Name = model.Name,
+                    PhoneNum = model.Number,
+                    PreferredDateTime = model.PreferredDateTime,
+                    TableNo = "1"
+                };
 
-            bookingRepository.Save(booking);
-
-            return View(new RestaurantViewModel());
+                bookingRepository.Insert(booking);
+                unitOfWork.Commit();
+                return RedirectToAction("BookingCompleted");
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("Error");
+            }
         }
 
 

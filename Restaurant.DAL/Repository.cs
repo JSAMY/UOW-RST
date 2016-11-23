@@ -1,5 +1,6 @@
 ﻿using Restaurant.Core;
 using Restaurant.DatabaseContext;
+using Restaurant.Interface;
 using Restaurant.Interface.Repository;
 using System;
 using System.Data.Entity;
@@ -8,23 +9,21 @@ namespace Restaurant.DAL
 {
     public class Repository<T>  : IRepository<T> where T:Entity
     {
-        private readonly ApplicationDbContext context;
+        private readonly IApplicationDbContext context;
         private IDbSet<T> entities;
 
-        public Repository(ApplicationDbContext context)
+        public Repository(IApplicationDbContext _context)
         {
-            this.context = context;
+            this.context = _context;
         }
 
-        public bool Save(T entity)
+        public bool Insert(T entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException("entity");
             }
             this.Entities.Add(entity);
-            this.context.SaveChanges();
-
             return true;
         }
 

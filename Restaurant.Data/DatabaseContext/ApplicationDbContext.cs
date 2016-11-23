@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Restaurant.Core;
+using Restaurant.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace Restaurant.DatabaseContext
 {
 
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
     {
         public ApplicationDbContext()
             : base("DefaultConnection")
@@ -28,8 +29,6 @@ namespace Restaurant.DatabaseContext
         {
             return base.Set<TEntity>();
         }
-
-        //public IDbSet<Booking> Bookings { get; set; }
 
         public new void SaveChanges()
         {

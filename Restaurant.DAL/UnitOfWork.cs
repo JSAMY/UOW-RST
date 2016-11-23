@@ -1,5 +1,6 @@
 ﻿using Restaurant.Core;
 using Restaurant.DatabaseContext;
+using Restaurant.Interface;
 using Restaurant.Interface.Repository;
 using System;
 using System.Collections.Generic;
@@ -8,19 +9,19 @@ namespace Restaurant.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ApplicationDbContext context;
+        private readonly IApplicationDbContext context;
         private bool disposed;
-        private Dictionary<string, object> repositories;
+        //private Dictionary<string, object> repositories;
 
-        public UnitOfWork(ApplicationDbContext context)
+        public UnitOfWork(IApplicationDbContext _context)
         {
-            this.context = context;
+            this.context = _context;
         }
 
-        public UnitOfWork()
-        {
-            context = new ApplicationDbContext();
-        }
+        //public UnitOfWork()
+        //{
+        //    context = new ApplicationDbContext();
+        //}
 
         public void Dispose()
         {
@@ -40,22 +41,27 @@ namespace Restaurant.DAL
             disposed = true;
         }
 
-        public IRepository<T> Repository<T>() where T : Entity
+        public void Commit()
         {
-            if (repositories == null)
-            {
-                repositories = new Dictionary<string, object>();
-            }
-
-            var type = typeof(T).Name;
-
-            if (!repositories.ContainsKey(type))
-            {
-                var repositoryType = typeof(Repository<>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), context);
-                repositories.Add(type, repositoryInstance);
-            }
-            return (Repository<T>)repositories[type];
+            context.SaveChanges();
         }
+
+        //public IRepository<T> Repository<T>() where T : Entity
+        //{
+        //    if (repositories == null)
+        //    {
+        //        repositories = new Dictionary<string, object>();
+        //    }
+
+        //    var type = typeof(T).Name;
+
+        //    if (!repositories.ContainsKey(type))
+        //    {
+        //        var repositoryType = typeof(Repository<>);
+        //        var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), context);
+        //        repositories.Add(type, repositoryInstance);
+        //    }
+        //    return (Repository<T>)repositories[type];
+        //}
     }
 }

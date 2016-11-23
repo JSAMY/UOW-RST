@@ -9,6 +9,6 @@ namespace Restaurant.Interface.Repository
 {
     public interface IRepository<T> where T : Entity
     {
-        bool Save(T item);
+        bool Insert(T item);
     }
 }
