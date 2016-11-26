@@ -48,6 +48,7 @@ namespace Restaurant.Tests.Controllers
             Assert.IsNotNull(((RedirectToRouteResult)result).RouteValues.FirstOrDefault().Value, "BookingCompleted");
         }
 
+
         [TestMethod]
         public void IndexActionShouldRedirectToErrorPageIfAnyDatabaseErrorOccurred()
         {
