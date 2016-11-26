@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -9,6 +10,7 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Restaurant.Common
 {
@@ -84,6 +86,87 @@ namespace Restaurant.Common
                 return default(T);
             }
         }
+
+        public static ReturnType Bind<ReturnType, SourceType>
+   (
+   SourceType srcObj,
+   Boolean defaultValueInsteadOfNull = false,
+   bool rstCryptography = true   
+   )
+    where ReturnType : class, new()
+    where SourceType : class, new()
+        {
+
+            ReturnType retObj = new ReturnType();
+            
+            var srcProps = srcObj.GetType().GetProperties();
+            var retProps = retObj.GetType().GetProperties();
+
+            for (int propInx = 0; propInx < srcProps.Count(); propInx++)
+            {
+                var retExistProp = retProps.FirstOrDefault(p => p.Name.Equals(srcProps[propInx].Name));
+
+                if (retExistProp != null)
+                {
+                    if (retExistProp.PropertyType.Equals(srcProps[propInx].PropertyType))
+                    {
+                        var noCryptography = true;
+                         
+                        if (rstCryptography)
+                        {
+                            noCryptography = false;
+                            string cryptData = "";
+                            //var hasDataProtection = retExistProp.GetCustomAttributes(typeof(RSTCryptographyAttribute), true);
+                            var hasDataProtection = srcProps[propInx].GetCustomAttributes(typeof(RSTCryptographyAttribute), true);
+                            if (hasDataProtection.Any())
+                            {
+                                switch (((RSTCryptographyAttribute)hasDataProtection.First()).Mode)
+                                {
+                                    case Mode.Encryption:
+                                        cryptData = DecoderUtil.Encrypt(srcProps[propInx].GetValue(srcObj).ToString());
+                                        break;
+                                    case Mode.Decryption:
+                                        cryptData = DecoderUtil.Decrypt(srcProps[propInx].GetValue(srcObj).ToString());
+                                        break;
+
+                                    case Mode.None:
+                                        noCryptography = true;
+                                        break;
+                                }
+
+                                if (!string.IsNullOrEmpty(cryptData) && !noCryptography)
+                                {
+                                    retExistProp.SetValue
+                                    (
+                                    retObj,
+                                    TConverter.ChangeType(srcProps[propInx].PropertyType, cryptData),
+                                    null
+                                    );
+                                }
+                            }
+                            else
+                            {
+                                noCryptography = true;
+                            }
+                        }
+
+                        if (noCryptography )
+                        {
+                            retExistProp.SetValue
+                            (
+                            retObj,
+                            TConverter.ChangeType(srcProps[propInx].PropertyType, srcProps[propInx].GetValue(srcObj)),
+                            null
+                            );
+                        }
+
+
+                    }
+                }
+            }
+
+            return retObj;
+        }
     }
 
     public static class TConverter
@@ -119,46 +202,5 @@ namespace Restaurant.Common
         }
     }
 
-    public static class Email
-    {
-        public static void SendGmail()
-        {
-            var fromAddress = new MailAddress("from@gmail.com", "From Name");
-            var toAddress = new MailAddress("to@example.com", "To Name");
-            const string fromPassword = "fromPassword";
-            const string subject = "Subject";
-            const string body = "Body";
-
-            var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-            };
-            using (var message = new MailMessage(fromAddress, toAddress)
-            {
-                Subject = subject,
-                Body = body
-            })
-            {
-                smtp.Send(message);
-            }
-        }
-
-        public static void SendEmail(string body)
-        {
-            System.Net.Mail.MailMessage oMailMsg = new System.Net.Mail.MailMessage();
-            oMailMsg.To.Add(ConfigurationManager.AppSettings["ToEmailAddress"]);
-            oMailMsg.Subject = ConfigurationManager.AppSettings["Subject"];
-
-            oMailMsg.IsBodyHtml = true;
-            oMailMsg.Body = body;
-
-            System.Net.Mail.SmtpClient oSMTPClient = new System.Net.Mail.SmtpClient();
-            oSMTPClient.Send(oMailMsg);
-        }
-    }
+    
 }

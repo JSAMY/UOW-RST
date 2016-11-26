@@ -11,7 +11,7 @@ namespace Restaurant.DAL
     {
         private readonly IApplicationDbContext context;
         private bool disposed;
-        //private Dictionary<string, object> repositories;
+        private Dictionary<string, object> repositories;
 
         public UnitOfWork(IApplicationDbContext _context)
         {
@@ -41,27 +41,53 @@ namespace Restaurant.DAL
             disposed = true;
         }
 
-        public void Commit()
+        public bool Commit()
         {
-            context.SaveChanges();
+            try
+            {
+                context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        //public IRepository<T> Repository<T>() where T : Entity
-        //{
-        //    if (repositories == null)
-        //    {
-        //        repositories = new Dictionary<string, object>();
-        //    }
+        public IRepository<T> Repository<T>() where T : Entity
+        {
+            if (repositories == null)
+            {
+                repositories = new Dictionary<string, object>();
+            }
 
-        //    var type = typeof(T).Name;
+            var type = typeof(T).Name;
 
-        //    if (!repositories.ContainsKey(type))
-        //    {
-        //        var repositoryType = typeof(Repository<>);
-        //        var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), context);
-        //        repositories.Add(type, repositoryInstance);
-        //    }
-        //    return (Repository<T>)repositories[type];
-        //}
+            if (!repositories.ContainsKey(type))
+            {
+                var repositoryType = typeof(Repository<>);
+                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), context);
+                repositories.Add(type, repositoryInstance);
+            }
+            return (Repository<T>)repositories[type];
+        }
+
+        private IRepository<T> Repositoryxx<T>() where T : Entity
+        {
+            if (repositories == null)
+            {
+                repositories = new Dictionary<string, object>();
+            }
+
+            var type = typeof(T).Name;
+
+            if (!repositories.ContainsKey(type))
+            {
+                var repositoryType = typeof(Repository<>);
+                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), context);
+                repositories.Add(type, repositoryInstance);
+            }
+            return (Repository<T>)repositories[type];
+        }
     }
 }

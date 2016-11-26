@@ -62,6 +62,10 @@
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Restaurant.Common\Restaurant.Common.csproj">
+      <Project>{4d9a8037-0e73-483d-ab60-1320812bd612}</Project>
+      <Name>Restaurant.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Restaurant.Core\Restaurant.Core.csproj">
       <Project>{3616a6a7-ad4c-43b7-95b3-00508e235979}</Project>
       <Name>Restaurant.Core</Name>

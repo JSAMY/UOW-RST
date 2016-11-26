@@ -23,8 +23,7 @@ namespace Restaurant.Core
 
         [Required]
         public DateTime PreferredDateTime { get; set; }
-
-        [Required]
+        
         public string TableNo { get; set; }
 
         public DateTime CreatedAt { get; set; }

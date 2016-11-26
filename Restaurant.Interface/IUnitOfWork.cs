@@ -10,8 +10,8 @@ namespace Restaurant.Interface
 {
     public interface IUnitOfWork : IDisposable
     {
-        //IRepository<T> Repository<T>() where T : Entity;
+        IRepository<T> Repository<T>() where T : Entity;
 
-        void Commit();
+        bool Commit();
     }
 }

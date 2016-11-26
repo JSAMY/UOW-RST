@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using Microsoft.Practices.Unity.Mvc;
+using Restaurant.Common;
 using Restaurant.DAL;
 using Restaurant.DatabaseContext;
 using Restaurant.Interface;
@@ -25,6 +26,7 @@ namespace Restaurant.Web
             uContainer.RegisterType(typeof(IRepository<>), typeof(Repository<>));
             uContainer.RegisterType(typeof(IUnitOfWork), typeof(UnitOfWork));
             uContainer.RegisterType(typeof(IApplicationDbContext), typeof(ApplicationDbContext));
+            uContainer.RegisterType(typeof(IEmail), typeof(EmailService));
             return uContainer;
 
         }

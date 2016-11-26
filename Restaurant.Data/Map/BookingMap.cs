@@ -19,7 +19,7 @@ namespace Restaurant.Data.Map
             Property(t => t.Email).IsRequired();
             Property(t => t.PhoneNum).IsRequired();
             Property(t => t.PreferredDateTime).IsRequired();
-            Property(t => t.TableNo).IsRequired();
+            Property(t => t.TableNo);
             Property(t => t.CreatedAt).IsRequired();
 
             ToTable("Booking");

@@ -23,9 +23,29 @@ namespace Restaurant.DAL
             {
                 throw new ArgumentNullException("entity");
             }
-            this.Entities.Add(entity);
+            this.Entities.Add(entity);           
             return true;
         }
+
+        public bool Update(T entity)
+        {
+            // need to be implemented
+            //throw NotImplementedException();
+            return false;
+        }
+
+        public bool Delete(T item)
+        {
+            // need to be implemented
+            return false;
+        }
+
+        public T Find(int id)
+        {
+            // need to be implemented
+            return null;
+        }
+      
 
         private IDbSet<T> Entities
         {

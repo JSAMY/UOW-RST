@@ -13,16 +13,16 @@
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control alpha" } })
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.PhoneNum, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PhoneNum, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PhoneNum, "", new { @class = "text-danger" })
                 </div>                
             </div>
         </div>
@@ -50,6 +50,7 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <div class="form-group">
+                     
                     <input type="submit" value="Book Now" class="btn btn-primary btn-lg" />
                 </div>
             </div>

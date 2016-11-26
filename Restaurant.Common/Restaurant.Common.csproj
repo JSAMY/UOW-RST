@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,8 +42,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attribute\RSTAttribute.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="EmailService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Restaurant.Core\Restaurant.Core.csproj">
+      <Project>{3616a6a7-ad4c-43b7-95b3-00508e235979}</Project>
+      <Name>Restaurant.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Restaurant.Interface\Restaurant.Interface.csproj">
+      <Project>{36d82760-69f5-4d81-a002-a9882abcffd7}</Project>
+      <Name>Restaurant.Interface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

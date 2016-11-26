@@ -12,20 +12,20 @@ namespace Restaurant.Web.Controllers
 {
     public class BaseController : Controller
     {
-        protected IUnitOfWork unitOfWork;// = new UnitOfWork();
-
-        protected IRepository<Booking> bookingRepository;
+        protected IUnitOfWork unitOfWork;
+        protected IEmail emailService;
 
         public BaseController()
         {
 
         }
 
-        public BaseController(IUnitOfWork _unitOfWork, IRepository<Booking> _bookingRepository)
+        public BaseController(IUnitOfWork _unitOfWork,IEmail _emailService)
         {
             this.unitOfWork = _unitOfWork;
-            this.bookingRepository = _bookingRepository;
+            this.emailService = _emailService;        
         }
+        
 
     }
 }
